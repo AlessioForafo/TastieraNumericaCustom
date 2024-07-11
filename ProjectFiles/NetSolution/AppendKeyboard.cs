@@ -29,28 +29,39 @@ public class AppendKeyboard : BaseNetLogic
     }
 
     [ExportMethod]
-    public void AppendValue(string value) 
+    public void AppendValue(string value)
     {
-        var sboxValue = sBox.Value.ToString();
-        var newValue = int.Parse(value);
+        var isBackspace = value == string.Empty;
+        var sboxValue = Math.Round(sBox.Value, numberOfDecimals).ToString();
         var sboxValueHasDecimals = sboxValue.Contains(',');
         var integerPart = sboxValue.Split(',')[0];
         var decimalPart = sboxValueHasDecimals ? sboxValue.Split(',')[1].Substring(0, numberOfDecimals) : string.Empty;
-        var res = float.Parse(value);
+        float res;
 
-        if ((bool) typingDecimals.Value.Value && !sboxValueHasDecimals)
+        if (sboxValueHasDecimals)
         {
-            res = int.Parse(sBox.Value + value) * 0.1f;
-            numberOfDecimals++;
-        } else if (sboxValueHasDecimals)
-        {
-            numberOfDecimals++;
+            if (!isBackspace) numberOfDecimals++;
             decimalPart += value;
-            res = (float) (int.Parse(integerPart + decimalPart) * Math.Pow(0.1, numberOfDecimals));
-        } 
+            res = float.Parse(Math.Round(float.Parse(integerPart + "," + decimalPart), numberOfDecimals).ToString());
+        }
+        else if ((bool)typingDecimals.Value.Value)
+        {
+            if (!isBackspace) numberOfDecimals++;
+            res = float.Parse(integerPart + "," + value);
+            typingDecimals.Value = false;
+        }
+        else
+        {
+            if (!isBackspace)
+            {
+                res = int.Parse(sboxValue + value);
+            } else
+            {
+                res = sboxValue.Length == 1 ? 0 : int.Parse(sboxValue.Substring(0, sboxValue.Length - 1));
+            }
+        }
 
         sBox.Value = res;
-        typingDecimals.Value = false;
     }
 
     [ExportMethod]
@@ -72,14 +83,11 @@ public class AppendKeyboard : BaseNetLogic
     public void Backspace()
     {
         var sboxValueHasDecimals = sBox.Value.ToString().Contains(',');
-        if (sboxValueHasDecimals )
+        if (sboxValueHasDecimals)
         {
             numberOfDecimals--;
         }
 
-        var sBoxLength = sBox.Value.ToString().Length;
-        if (sBoxLength == 1) return;
-        var tempValue = sBox.Value.ToString().Substring(0, sBoxLength - 1);
-        sBox.Value = float.Parse(tempValue);
+        AppendValue(string.Empty);
     }
 }

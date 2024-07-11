@@ -9,15 +9,19 @@ using FTOptix.NativeUI;
 using FTOptix.CoreBase;
 using FTOptix.Core;
 using FTOptix.NetLogic;
+using FTOptix.DataLogger;
+using FTOptix.SQLiteStore;
+using FTOptix.Store;
 #endregion
 
 public class AppendKeyboard : BaseNetLogic
 {
+    private TextBox tBox;
+
     public override void Start()
     {
-        // Insert code to be executed when the user-defined logic is started
-        var display = Owner.Get<TextBox>("DsiplayTastiera");
-        display.Text = "";
+        tBox = ((TextBox)Owner);
+        tBox.Text = "";
     }
 
     public override void Stop()
@@ -28,8 +32,6 @@ public class AppendKeyboard : BaseNetLogic
     [ExportMethod]
     public void AppendValue(string value) 
     {
-        var display = Owner.Get<TextBox>("DsiplayTastiera");
-        display.Text = display.Text + value;
-    
+        tBox.Text += value;
     }
 }

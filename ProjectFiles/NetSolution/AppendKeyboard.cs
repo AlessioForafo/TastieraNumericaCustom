@@ -16,12 +16,12 @@ using FTOptix.Store;
 
 public class AppendKeyboard : BaseNetLogic
 {
-    private TextBox tBox;
+    private SpinBox sBox;
 
     public override void Start()
     {
-        tBox = ((TextBox)Owner);
-        tBox.Text = "";
+        sBox = ((SpinBox)Owner);
+        Clear();
     }
 
     public override void Stop()
@@ -32,6 +32,28 @@ public class AppendKeyboard : BaseNetLogic
     [ExportMethod]
     public void AppendValue(string value) 
     {
-        tBox.Text += value;
+        var tempValue = sBox.Value.ToString() + value;
+        sBox.Value = float.Parse(tempValue);
+    }
+
+    [ExportMethod]
+    public void Clear()
+    {
+        sBox.Value = 0;
+    }
+
+    [ExportMethod]
+    public void ToggleSign()
+    {
+        sBox.Value *= -1;
+    }
+
+    [ExportMethod]
+    public void Backspace()
+    {
+        var sBoxLength = sBox.Value.ToString().Length;
+        if (sBoxLength == 1) return;
+        var tempValue = sBox.Value.ToString().Substring(0, sBoxLength - 1);
+        sBox.Value = float.Parse(tempValue);
     }
 }

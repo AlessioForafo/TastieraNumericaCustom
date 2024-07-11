@@ -248,22 +248,31 @@ Children:
             ModellingRule: Optional
             Value: 3
           - Name: DisplayTastiera
-            Type: TextBox
+            Type: SpinBox
             Children:
-            - Name: Text
+            - Name: Value
               Type: BaseDataVariableType
-              DataType: LocalizedText
-              Value: {"LocaleId":"en-US","Text":"0"}
+              DataType: Double
             - Name: FontSize
               Type: BaseDataVariableType
               DataType: Size
               ModellingRule: Optional
               Value: 40.0
+            - Name: Height
+              Type: BaseVariableType
+              DataType: Size
+              ModellingRule: Optional
+              Value: 75.0
             - Name: HorizontalAlignment
               Type: BaseVariableType
               DataType: HorizontalAlignment
               ModellingRule: Optional
               Value: 3
+            - Name: VerticalAlignment
+              Type: BaseVariableType
+              DataType: VerticalAlignment
+              ModellingRule: Optional
+              Value: 2
             - Name: ns=3;GridLayoutProperties
               Type: GridLayoutProperties
               DisplayName: {"NamespaceIndex":3,"TextId":"GridLayoutPropertiesDisplayName"}
@@ -277,26 +286,6 @@ Children:
                 DataType: Int32
                 ModellingRule: Optional
                 Value: 4
-            - Name: TextHorizontalAlignment
-              Type: BaseVariableType
-              DataType: TextHorizontalAlignment
-              ModellingRule: Optional
-              Value: 2
-            - Name: TextVerticalAlignment
-              Type: BaseVariableType
-              DataType: TextVerticalAlignment
-              ModellingRule: Optional
-              Value: 1
-            - Name: Height
-              Type: BaseVariableType
-              DataType: Size
-              ModellingRule: Optional
-              Value: 75.0
-            - Name: VerticalAlignment
-              Type: BaseVariableType
-              DataType: VerticalAlignment
-              ModellingRule: Optional
-              Value: 2
             - Name: AppendKeyboard
               Type: NetLogic
               Children:
@@ -310,6 +299,16 @@ Children:
                   ValueRank: OneDimension
                   ArrayDimensions: [0]
                   Value: [{"TypeId":{"Id":296},"Body":{"Name":"value","DataType":{"Id":12},"ValueRank":-1,"ArrayDimensions":[],"Description":{"NamespaceIndex":-1,"LocaleId":"","Text":""}}}]
+              - Class: Method
+                Name: Backspace
+              - Class: Method
+                Name: Clear
+              - Class: Method
+                Name: ToggleSign
+            - Name: ShowButtons
+              Type: BaseDataVariableType
+              DataType: Boolean
+              ModellingRule: Optional
           - Name: 1
             Type: Button
             Children:
@@ -1917,7 +1916,7 @@ Children:
                       - Name: DynamicLink
                         Type: DynamicLink
                         DataType: NodePath
-                        Value: "../../../../../../DisplayTastiera/Text"
+                        Value: "../../../../../../DisplayTastiera/Value"
                     - Name: ArrayIndex
                       Type: BaseDataVariableType
                       DataType: UInt32
@@ -2047,6 +2046,68 @@ Children:
               DataType: ResourceUri
               ModellingRule: Optional
               Value: "ns=7;%PROJECTDIR%/icons/backspace_24dp_5F6368.svg"
+            - Name: MouseClickEventHandler1
+              Type: EventHandler
+              Children:
+              - Name: ListenEventType
+                Type: PropertyType
+                DataType: NodeId
+                Value: "/Types/EventTypes/BaseEventType/MouseEvent/MouseClickEvent"
+              - Name: MethodsToCall
+                Type: BaseObjectType
+                Children:
+                - Name: MethodContainer1
+                  Type: BaseObjectType
+                  Children:
+                  - Name: ns=2;ObjectPointer
+                    Type: NodePointer
+                    DataType: NodeId
+                    Children:
+                    - Name: Kind
+                      Type: PropertyType
+                      DataType: NodeId
+                      Value: "/Types/ObjectTypes/BaseObjectType"
+                    - Name: DynamicLink
+                      Type: DynamicLink
+                      DataType: NodePath
+                      Value: "../../../../../DisplayTastiera/AppendKeyboard@NodeId"
+                      Children:
+                      - Name: Mode
+                        Type: BaseVariableType
+                        DataType: DynamicLinkMode
+                        ModellingRule: Optional
+                        Value: 2
+                  - Name: ns=2;Method
+                    Type: BaseDataVariableType
+                    DataType: String
+                    Value: "Backspace"
+              - Name: EventArguments
+                Type: MouseClickEvent
+                Children:
+                - Name: EventId
+                  Type: PropertyType
+                  DataType: ByteString
+                - Name: EventType
+                  Type: PropertyType
+                  DataType: NodeId
+                - Name: SourceNode
+                  Type: PropertyType
+                  DataType: NodeId
+                - Name: SourceName
+                  Type: PropertyType
+                  DataType: String
+                - Name: Time
+                  Type: PropertyType
+                  DataType: UtcTime
+                - Name: ReceiveTime
+                  Type: PropertyType
+                  DataType: UtcTime
+                - Name: Message
+                  Type: PropertyType
+                  DataType: LocalizedText
+                - Name: Severity
+                  Type: PropertyType
+                  DataType: UInt16
           - Name: clear
             Type: Button
             Children:
@@ -2098,6 +2159,68 @@ Children:
               DataType: Size
               ModellingRule: Optional
               Value: 4.0
+            - Name: MouseClickEventHandler1
+              Type: EventHandler
+              Children:
+              - Name: ListenEventType
+                Type: PropertyType
+                DataType: NodeId
+                Value: "/Types/EventTypes/BaseEventType/MouseEvent/MouseClickEvent"
+              - Name: MethodsToCall
+                Type: BaseObjectType
+                Children:
+                - Name: MethodContainer1
+                  Type: BaseObjectType
+                  Children:
+                  - Name: ns=2;ObjectPointer
+                    Type: NodePointer
+                    DataType: NodeId
+                    Children:
+                    - Name: Kind
+                      Type: PropertyType
+                      DataType: NodeId
+                      Value: "/Types/ObjectTypes/BaseObjectType"
+                    - Name: DynamicLink
+                      Type: DynamicLink
+                      DataType: NodePath
+                      Value: "../../../../../DisplayTastiera/AppendKeyboard@NodeId"
+                      Children:
+                      - Name: Mode
+                        Type: BaseVariableType
+                        DataType: DynamicLinkMode
+                        ModellingRule: Optional
+                        Value: 2
+                  - Name: ns=2;Method
+                    Type: BaseDataVariableType
+                    DataType: String
+                    Value: "Clear"
+              - Name: EventArguments
+                Type: MouseClickEvent
+                Children:
+                - Name: EventId
+                  Type: PropertyType
+                  DataType: ByteString
+                - Name: EventType
+                  Type: PropertyType
+                  DataType: NodeId
+                - Name: SourceNode
+                  Type: PropertyType
+                  DataType: NodeId
+                - Name: SourceName
+                  Type: PropertyType
+                  DataType: String
+                - Name: Time
+                  Type: PropertyType
+                  DataType: UtcTime
+                - Name: ReceiveTime
+                  Type: PropertyType
+                  DataType: UtcTime
+                - Name: Message
+                  Type: PropertyType
+                  DataType: LocalizedText
+                - Name: Severity
+                  Type: PropertyType
+                  DataType: UInt16
           - Name: sign
             Type: Button
             Children:
@@ -2177,7 +2300,7 @@ Children:
                     - Name: DynamicLink
                       Type: DynamicLink
                       DataType: NodePath
-                      Value: "../../../../../AppendKeyboard@NodeId"
+                      Value: "../../../../../DisplayTastiera/AppendKeyboard@NodeId"
                       Children:
                       - Name: Mode
                         Type: BaseVariableType
@@ -2187,19 +2310,7 @@ Children:
                   - Name: ns=2;Method
                     Type: BaseDataVariableType
                     DataType: String
-                    Value: "AppendValue"
-                  - Name: InputArguments
-                    Type: BaseObjectType
-                    Children:
-                    - Name: value
-                      Type: BaseDataVariableType
-                      DataType: String
-                      Value: "1"
-                      Children:
-                      - Name: DynamicLink
-                        Type: DynamicLink
-                        DataType: NodePath
-                        Value: "../../../../../Text"
+                    Value: "ToggleSign"
               - Name: EventArguments
                 Type: MouseClickEvent
                 Children:

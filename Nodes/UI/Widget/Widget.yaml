@@ -137,7 +137,7 @@ Children:
               Type: BaseDataVariableType
               DataType: Color
               ModellingRule: Optional
-              Value: "#443f3f"
+              Value: "#535151"
             - Name: FontItalic
               Type: BaseDataVariableType
               DataType: Boolean
@@ -187,6 +187,11 @@ Children:
               DataType: HorizontalAlignment
               ModellingRule: Optional
               Value: 3
+            - Name: TextColor
+              Type: BaseDataVariableType
+              DataType: Color
+              ModellingRule: Optional
+              Value: "#535151"
           - Name: HorizontalAlignment
             Type: BaseVariableType
             DataType: HorizontalAlignment
@@ -305,6 +310,9 @@ Children:
                 Name: Clear
               - Class: Method
                 Name: ToggleSign
+              - Name: typingDecimals
+                Type: BaseDataVariableType
+                DataType: Boolean
             - Name: ShowButtons
               Type: BaseDataVariableType
               DataType: Boolean
@@ -1626,36 +1634,38 @@ Children:
                   - Name: ns=2;ObjectPointer
                     Type: NodePointer
                     DataType: NodeId
+                    Value: "/Objects/Commands/VariableCommands"
                     Children:
                     - Name: Kind
                       Type: PropertyType
                       DataType: NodeId
                       Value: "/Types/ObjectTypes/BaseObjectType"
-                    - Name: DynamicLink
-                      Type: DynamicLink
-                      DataType: NodePath
-                      Value: "../../../../../DisplayTastiera/AppendKeyboard@NodeId"
-                      Children:
-                      - Name: Mode
-                        Type: BaseVariableType
-                        DataType: DynamicLinkMode
-                        ModellingRule: Optional
-                        Value: 2
                   - Name: ns=2;Method
                     Type: BaseDataVariableType
                     DataType: String
-                    Value: "AppendValue"
+                    Value: "Set"
                   - Name: InputArguments
                     Type: BaseObjectType
                     Children:
-                    - Name: value
+                    - Name: VariableToModify
                       Type: BaseDataVariableType
-                      DataType: String
+                      DataType: VariablePointer
+                      Description: {"NamespaceIndex":2,"TextId":"SetVariableToModifyDescription"}
                       Children:
                       - Name: DynamicLink
                         Type: DynamicLink
                         DataType: NodePath
-                        Value: "../../../../../Text"
+                        Value: "../../../../../../DisplayTastiera/AppendKeyboard/typingDecimals@NodeId"
+                    - Name: Value
+                      Type: BaseDataVariableType
+                      DataType: Boolean
+                      Description: {"NamespaceIndex":2,"TextId":"SetValueDescription"}
+                      Value: true
+                    - Name: ArrayIndex
+                      Type: BaseDataVariableType
+                      DataType: UInt32
+                      Description: {"NamespaceIndex":2,"TextId":"SetArrayIndexDescription"}
+                      ValueRank: ScalarOrOneDimension
               - Name: EventArguments
                 Type: MouseClickEvent
                 Children:
